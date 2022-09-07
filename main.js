@@ -3,12 +3,12 @@ function main(){
     var gl = kanvas.getContext("webgl");
 
     //vertex shader
-    var vertesShaderCode = `
+    var vertexShaderCode = `
     void main(){
     
     }
     `;
-    var vertesShaderObject = gl.createShader(gl.VERTEX_SHADER);
+    var vertexShaderObject = gl.createShader(gl.VERTEX_SHADER);
     gl.shaderSource(vertexShaderObject, vertexShaderCode);
     gl.compileShader(vertexShaderObject); //sudah jadi .o
 
@@ -29,5 +29,5 @@ function main(){
     gl.useProgram(shaderProgram);
 
     gl.clearColor(0.0, 0.0, 0.0, 1.0); // (R, G, B, Transparancy)
-    gl.clear(gl.COLOR_BUFFER_AT);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 }
