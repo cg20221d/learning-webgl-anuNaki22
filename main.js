@@ -6,7 +6,8 @@ function main(){
     var vertices = [
         0.5, 0.5,   // A: kanan atas
         0.0, 0.0,   // B: bawah tengah 
-        -0.5, 0.5   // C: kiri atas
+        -0.5, 0.5,  // C: kiri atas
+        0.0, 1.0    // D: atas tengah
     ];
 
     var buffer = gl.createBuffer();
@@ -57,5 +58,5 @@ function main(){
     gl.clearColor(1.0, 0.65, 0.0, 1.0); // (R, G, B, Transparancy)
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    gl.drawArrays(gl.POINTS, 0, 3);
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
 }
