@@ -70,12 +70,17 @@ function main(){
     gl.enableVertexAttribArray(aColor);
 
     function render() {
+        setTimeout( function() {
+
+            
+
         gl.clearColor(1.0, 0.65, 0.0, 1.0); // (R, G, B, Transparancy)
         gl.clear(gl.COLOR_BUFFER_BIT);
         theta += 0.1;
         gl.uniform1f(uTheta, theta);
         
         gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
+    }, 1000/30); // Frame rate: 30 fps
     }
     setInterval(render, 1000/60);
 }
