@@ -4,10 +4,10 @@ function main(){
     var gl = kanvas.getContext("webgl");
 
     var vertices = [
-        0.5, 0.5, 0.0, 1.0, 1.0,  // A: kanan atas    (BIRU LANGIT)
-        0.0, 0.0, 1.0, 0.0, 1.0,  // B: bawah tengah  (MAGENTA)
-        -0.5, 0.5, 1.0, 1.0, 1.0, // C: kiri atas     (KUNING)
-        0.0, 1.0, 1.0, 1.0, 1.0    // D: atas tengah   (PUTIH)
+        0.5, 0.0, 0.0, 1.0, 1.0,  // A: kanan atas    (BIRU LANGIT)
+        0.0, -0.5, 1.0, 0.0, 1.0,  // B: bawah tengah  (MAGENTA)
+        -0.5, 0.0, 1.0, 1.0, 1.0, // C: kiri atas     (KUNING)
+        0.0, 0.5, 1.0, 1.0, 1.0    // D: atas tengah   (PUTIH)
     ];
 
     var buffer = gl.createBuffer();
@@ -52,6 +52,7 @@ function main(){
     
     //Variabel lokal
     var theta = 0.0;
+    var freeze = false;
 
     //Variabel pointer ke GLSL
     var uTheta = gl.getUniformLocation(shaderProgram, "uTheta");
@@ -69,18 +70,33 @@ function main(){
         2 * Float32Array.BYTES_PER_ELEMENT);
     gl.enableVertexAttribArray(aColor);
 
+    // Grafika Interakrtif 
+    // Tetikus
+    function onMouseClick(event){
+        freeze = !freeze;
+    }
+    document.addEventListener("Click", onMouseClick);
+
+    // Papan ketuk
+    function onKeydown(event){
+        if (event.keyCode == 32) freeze = !freeze;
+    }
+    function onKeyup(event){
+        if (event.keyCode == 32) freeze = !freeze;
+    }
+    document.addEventListener("keydown", onKeydown);
+    document.addEventListener("keyup", onKeyup);
+
     function render() {
-        setTimeout( function() {
-
-            
-
         gl.clearColor(1.0, 0.65, 0.0, 1.0); // (R, G, B, Transparancy)
         gl.clear(gl.COLOR_BUFFER_BIT);
-        theta += 0.1;
-        gl.uniform1f(uTheta, theta);
-        
+        if(!freeze){
+            theta += 0.1;
+            gl.uniform1f(uTheta, theta);
+        }
         gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
-    }, 1000/30); // Frame rate: 30 fps
+
+        requestAnimationFrame(render);
     }
-    setInterval(render, 1000/60);
+    requestAnimationFrame(render);
 }
